@@ -6,8 +6,10 @@ class Dispatcher(interpreter: Interpreter) extends RequestHandler {
       case ("POST", "task-event") =>
         val responseBody = interpreter.execute(request.body)
         Response(201, responseBody)
+      case ("GET", "task") =>
+        val responseBody = TaskFormatter.tasksToString(interpreter.tasks)
+        Response(200, responseBody)
       case _ => Response(405, s"Not allowed to apply method ${request.method} to subject ${request.subject}")
     }
-
   }
 }

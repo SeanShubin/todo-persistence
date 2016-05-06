@@ -8,9 +8,24 @@ case class Tasks(lastId: Int, tasks: Map[Int,Task]) {
     (Tasks(nextId, newTasks), newTask)
   }
 
-  def done(id: Int, newValueForDone: Boolean): Tasks = ???
+  def done(id: Int, newValueForDone: Boolean): Tasks = {
+    val oldTask = tasks(id)
+    val newTask = oldTask.copy(done = newValueForDone)
+    val newTasks = tasks.updated(id, newTask)
+    copy(tasks = newTasks)
+  }
 
-  def clearDone(): Tasks = ???
+  def clearDone(): Tasks = {
+    val tasksNotDone = for {
+      (id, task) <- tasks
+      if !task.done
+    } yield (id, task)
+    copy(tasks = tasksNotDone)
+  }
+
+  def asOrderedSequence(): Seq[Task] = {
+    tasks.values.toSeq.sortWith(Task.SortById)
+  }
 }
 
 object Tasks {

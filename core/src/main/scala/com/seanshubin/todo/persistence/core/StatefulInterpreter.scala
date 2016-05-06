@@ -11,17 +11,17 @@ class StatefulInterpreter(initialTasks: Tasks) extends Interpreter {
 
   override def execute(line: String): String = {
     val command = CommandParser.parse(line)
-    executeCommand(command)
+    executeCommandInSerial(command)
   }
 
   @tailrec
-  private def executeCommand(command: Command): String = {
+  private def executeCommandInSerial(command: Command): String = {
     val oldTasks = atomicTasks.get()
     val (newTasks, message) = command.apply(oldTasks)
     if (atomicTasks.compareAndSet(oldTasks, newTasks)) {
       message
     } else {
-      executeCommand(command)
+      executeCommandInSerial(command)
     }
   }
 }

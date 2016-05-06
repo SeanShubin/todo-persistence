@@ -8,8 +8,7 @@ object Command {
   case class AddCommand(name: String) extends Command {
     override def apply(tasks: Tasks): (Tasks, String) = {
       val (newTasks, task) = tasks.add(name)
-      val Task(id, _, done) = task
-      val message = s"$id $done $name"
+      val message = TaskFormatter.taskToString(task)
       (newTasks, message)
     }
   }
