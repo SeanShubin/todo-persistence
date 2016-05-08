@@ -1,6 +1,6 @@
 package com.seanshubin.todo.persistence.core
 
-case class Task(id: Int, name: String, done: Boolean =false)
+case class Task(id: Int, name: String, done: Boolean = false)
 
 object Task {
   val SortById: (Task, Task) => Boolean = (left, right) => {

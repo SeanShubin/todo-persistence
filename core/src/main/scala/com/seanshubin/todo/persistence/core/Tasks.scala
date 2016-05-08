@@ -1,6 +1,6 @@
 package com.seanshubin.todo.persistence.core
 
-case class Tasks(lastId: Int, tasks: Map[Int,Task]) {
+case class Tasks(lastId: Int, tasks: Map[Int, Task]) {
   def add(name: String): (Tasks, Task) = {
     val nextId = lastId + 1
     val newTask = Task(nextId, name)

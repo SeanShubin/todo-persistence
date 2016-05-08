@@ -28,7 +28,7 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <mainClass>com.seanshubin.todo.persistence.console.ConsoleApplication</mainClass>
+                            <mainClass>com.seanshubin.todo.persistence.console.EntryPoint</mainClass>
                             <filename>todo-persistence.jar</filename>
                             <manifestEntries>
                                 <One-Jar-URL-Factory>com.simontuffs.onejar.JarClassLoader$OneJarURLFactory

@@ -5,6 +5,7 @@ sealed trait Command {
 }
 
 object Command {
+
   case class AddCommand(name: String) extends Command {
     override def apply(tasks: Tasks): (Tasks, String) = {
       val (newTasks, task) = tasks.add(name)
@@ -30,4 +31,5 @@ object Command {
       (tasks.clearDone(), "")
     }
   }
+
 }
