@@ -1,0 +1,15 @@
+{
+  reportDir target/detangled/
+  searchPaths [
+    console/target/todo-persistence.jar
+  ]
+  level 2
+  startsWith {
+    include [[com seanshubin todo persistence]]
+    drop [[com seanshubin todo persistence]]
+    exclude []
+  }
+  allowedInCycle [
+  ]
+  canFailBuild true
+}
