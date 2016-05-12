@@ -23,7 +23,7 @@ class DispatcherTest extends FunSuite {
   test("add") {
     //given
     val dispatcher = createDispatcher()
-    val request = RequestValue("POST", "task-event", "add Task A")
+    val request = RequestValue("POST", "/task-event", "add Task A")
     //when
     val response = dispatcher.handle(request)
     //then
@@ -34,10 +34,10 @@ class DispatcherTest extends FunSuite {
     //given
     val dispatcher = createDispatcher()
     //when
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task A"))
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task B"))
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task C"))
-    val response = dispatcher.handle(RequestValue("GET", "task"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task A"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task B"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task C"))
+    val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
     assert(response === ResponseValue(200, "1 false Task A\n2 false Task B\n3 false Task C"))
   }
@@ -46,9 +46,9 @@ class DispatcherTest extends FunSuite {
     //given
     val dispatcher = createDispatcher()
     //when
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task A"))
-    dispatcher.handle(RequestValue("POST", "task-event", "done 1"))
-    val response = dispatcher.handle(RequestValue("GET", "task"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task A"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "done 1"))
+    val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
     assert(response === ResponseValue(200, "1 true Task A"))
   }
@@ -57,10 +57,10 @@ class DispatcherTest extends FunSuite {
     //given
     val dispatcher = createDispatcher()
     //when
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task A"))
-    dispatcher.handle(RequestValue("POST", "task-event", "done 1"))
-    dispatcher.handle(RequestValue("POST", "task-event", "undone 1"))
-    val response = dispatcher.handle(RequestValue("GET", "task"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task A"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "done 1"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "undone 1"))
+    val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
     assert(response === ResponseValue(200, "1 false Task A"))
   }
@@ -69,12 +69,12 @@ class DispatcherTest extends FunSuite {
     //given
     val dispatcher = createDispatcher()
     //when
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task A"))
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task B"))
-    dispatcher.handle(RequestValue("POST", "task-event", "add Task C"))
-    dispatcher.handle(RequestValue("POST", "task-event", "done 2"))
-    dispatcher.handle(RequestValue("POST", "task-event", "clear"))
-    val response = dispatcher.handle(RequestValue("GET", "task"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task A"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task B"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "add Task C"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "done 2"))
+    dispatcher.handle(RequestValue("POST", "/task-event", "clear"))
+    val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
     assert(response === ResponseValue(200, "1 false Task A\n3 false Task C"))
   }
