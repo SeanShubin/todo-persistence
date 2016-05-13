@@ -6,29 +6,13 @@
 
     <!-- The Basics -->
     <!--<groupId>...</groupId>-->
-    <artifactId>todo-persistence-core</artifactId>
+    <artifactId>todo-persistence-contract</artifactId>
     <!--<version>...</version>-->
     <!--<packaging>...</packaging>-->
     <dependencies>
         <dependency>
-            <groupId>com.seanshubin</groupId>
-            <artifactId>todo-persistence-contract</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.seanshubin</groupId>
-            <artifactId>todo-persistence-contract-test</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
         </dependency>
     </dependencies>
     <parent>
@@ -41,16 +25,7 @@
     <!--<properties>...</properties>-->
 
     <!-- Build Settings -->
-    <build>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <!--<build>...</build>-->
     <!--<reporting>...</reporting>-->
 
     <!-- More Project Information -->
