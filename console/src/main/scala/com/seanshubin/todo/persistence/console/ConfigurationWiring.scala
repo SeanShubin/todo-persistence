@@ -11,6 +11,7 @@ trait ConfigurationWiring {
   def configuration: Configuration
 
   lazy val dataFileName: String = "tasks.txt"
+  lazy val healthCheckFileName: String = "health.txt"
   lazy val charset: Charset = StandardCharsets.UTF_8
   lazy val initialTasks: Tasks = Tasks.Empty
   lazy val statefulInterpreter: Interpreter = new StatefulInterpreter(initialTasks)
@@ -18,7 +19,8 @@ trait ConfigurationWiring {
   lazy val files: FilesContract = FilesDelegate
   lazy val storingInterpreter: Interpreter = new StoringInterpreter(clock, files, statefulInterpreter, configuration.dataFileDirectory, dataFileName)
   lazy val loadingInterpreter: Interpreter = new LoadingPersistentInterpreter(statefulInterpreter)
-  lazy val dispatcher: RequestValueHandler = new Dispatcher(storingInterpreter)
+  lazy val health: Health = new FileSystemHealth(files, configuration.dataFileDirectory, healthCheckFileName, charset)
+  lazy val dispatcher: RequestValueHandler = new Dispatcher(storingInterpreter, health)
   lazy val jettyHandler: Handler = new HandlerAdapter(dispatcher, charset)
   lazy val preLoader: PreLoader = new FileSystemPreLoader(configuration.dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
   lazy val runner: Runnable = new JettyRunner(configuration.port, JettyServerDelegate.create, jettyHandler, preLoader)

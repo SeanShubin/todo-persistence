@@ -81,8 +81,13 @@ class DispatcherTest extends FunSuite {
 
   def createDispatcher(): Dispatcher = {
     val tasks = Tasks.Empty
+    val health = new StubHealth
     val interpreter = new StatefulInterpreter(tasks)
-    val dispatcher = new Dispatcher(interpreter)
+    val dispatcher = new Dispatcher(interpreter, health)
     dispatcher
+  }
+
+  class StubHealth extends Health {
+    override def check(): ResponseValue = ???
   }
 }
