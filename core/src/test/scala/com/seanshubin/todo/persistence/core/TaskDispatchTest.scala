@@ -9,7 +9,7 @@ import org.scalatest.FunSuite
  This allows us to focus on making our code easy to test
  It also makes our code more generic
  */
-class DispatcherTest extends FunSuite {
+class TaskDispatchTest extends FunSuite {
   test("unknown request") {
     //given
     val dispatcher = createDispatcher()
@@ -81,13 +81,9 @@ class DispatcherTest extends FunSuite {
 
   def createDispatcher(): Dispatcher = {
     val tasks = Tasks.Empty
-    val health = new StubHealth
+    val dummyHealth = null
     val interpreter = new StatefulInterpreter(tasks)
-    val dispatcher = new Dispatcher(interpreter, health)
+    val dispatcher = new Dispatcher(interpreter, dummyHealth)
     dispatcher
-  }
-
-  class StubHealth extends Health {
-    override def check(): ResponseValue = ???
   }
 }

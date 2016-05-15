@@ -2,9 +2,7 @@ package com.seanshubin.todo.persistence.core
 
 import java.nio.file.{Path, Paths}
 
-import com.seanshubin.todo.persistence.contract.FilesContract
-
-class CommandLineArgumentsConfigurationValidator(commandLineArguments: Seq[String], files: FilesContract) extends ConfigurationValidator {
+class CommandLineArgumentsConfigurationValidator(commandLineArguments: Seq[String]) extends ConfigurationValidator {
   override def validate(): Configuration = {
     val port = validateCommandLineArgumentInt(0, "server port")
     val dataFileDirectory = validateCommandLineArgumentPath(1, "data file directory")
