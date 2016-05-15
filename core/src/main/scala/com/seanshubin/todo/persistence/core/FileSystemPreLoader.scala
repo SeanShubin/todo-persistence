@@ -7,7 +7,11 @@ import com.seanshubin.todo.persistence.contract.FilesContract
 
 import scala.collection.JavaConverters._
 
-class FileSystemPreLoader(dataFileDirectory: Path, files: FilesContract, charset: Charset, interpreter: Interpreter, dataFileName: String) extends PreLoader {
+class FileSystemPreLoader(dataFileDirectory: Path,
+                          files: FilesContract,
+                          charset: Charset,
+                          interpreter: Interpreter,
+                          dataFileName: String) extends PreLoader {
   override def loadInitialState(): Unit = {
     files.createDirectories(dataFileDirectory)
     val dataFile = dataFileDirectory.resolve(dataFileName)
