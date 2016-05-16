@@ -17,7 +17,7 @@ trait ConfigurationWiring {
   lazy val statefulInterpreter: Interpreter = new StatefulInterpreter(initialTasks)
   lazy val clock: Clock = Clock.systemUTC()
   lazy val files: FilesContract = FilesDelegate
-  lazy val storingInterpreter: Interpreter = new StoringInterpreter(clock, files, statefulInterpreter, configuration.dataFileDirectory, dataFileName)
+  lazy val storingInterpreter: Interpreter = new StoringInterpreter(clock, files, statefulInterpreter, configuration.dataFileDirectory, dataFileName, charset)
   lazy val loadingInterpreter: Interpreter = new LoadingInterpreter(statefulInterpreter)
   lazy val health: HealthCheck = new FileSystemHealthCheck(files, configuration.dataFileDirectory, healthCheckFileName, charset)
   lazy val dispatcher: RequestValueHandler = new Dispatcher(storingInterpreter, health)
