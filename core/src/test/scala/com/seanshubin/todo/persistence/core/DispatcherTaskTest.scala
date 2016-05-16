@@ -9,17 +9,7 @@ import org.scalatest.FunSuite
  This allows us to focus on making our code easy to test
  It also makes our code more generic
  */
-class TaskDispatchTest extends FunSuite {
-  test("unknown request") {
-    //given
-    val dispatcher = createDispatcher()
-    val request = RequestValue(method = "foo", subject = "bar", body = "baz")
-    //when
-    val response = dispatcher.handle(request)
-    //then
-    assert(response === ResponseValue(405, "Not allowed to apply method foo to subject bar"))
-  }
-
+class DispatcherTaskTest extends FunSuite {
   test("add") {
     //given
     val dispatcher = createDispatcher()

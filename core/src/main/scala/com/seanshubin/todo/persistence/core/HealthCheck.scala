@@ -1,5 +1,5 @@
 package com.seanshubin.todo.persistence.core
 
-trait Health {
+trait HealthCheck {
   def check(): ResponseValue
 }

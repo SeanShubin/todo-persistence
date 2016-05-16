@@ -7,7 +7,7 @@ import com.seanshubin.todo.persistence.contract.FilesContract
 
 import scala.collection.JavaConverters._
 
-class FileSystemHealth(files: FilesContract, dataFileDirectory: Path, healthCheckFileName: String, charset: Charset) extends Health {
+class FileSystemHealthCheck(files: FilesContract, dataFileDirectory: Path, healthCheckFileName: String, charset: Charset) extends HealthCheck {
   private val healthCheckFile = dataFileDirectory.resolve(healthCheckFileName)
 
   override def check(): ResponseValue = {
@@ -48,6 +48,6 @@ class FileSystemHealth(files: FilesContract, dataFileDirectory: Path, healthChec
 
   private def writeNumber(number: Int): Unit = {
     val lines = Seq(number.toString)
-    files.write(healthCheckFile, lines.asJava)
+    files.write(healthCheckFile, lines.asJava, charset)
   }
 }
