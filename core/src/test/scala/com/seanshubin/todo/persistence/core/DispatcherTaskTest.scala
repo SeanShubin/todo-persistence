@@ -1,5 +1,7 @@
 package com.seanshubin.todo.persistence.core
 
+import java.nio.charset.StandardCharsets
+
 import org.scalatest.FunSuite
 
 /*
@@ -11,6 +13,7 @@ import org.scalatest.FunSuite
  */
 class DispatcherTaskTest extends FunSuite {
   test("add") {
+    println(loadResource("todo/specification/task/get-task.txt"))
     //given
     val dispatcher = createDispatcher()
     val request = RequestValue("POST", "/task-event", "add Task A")
@@ -75,5 +78,15 @@ class DispatcherTaskTest extends FunSuite {
     val interpreter = new StatefulInterpreter(tasks)
     val dispatcher = new Dispatcher(interpreter, dummyHealth)
     dispatcher
+  }
+
+  def loadResource(name:String): String ={
+    val inputStream = getClass.getClassLoader.getResourceAsStream(name)
+    if(inputStream == null){
+      throw new RuntimeException(s"Unable to load resource named $name")
+    }
+    val bytes = IoUtil.inputStreamToBytes(inputStream)
+    val string = new String(bytes, StandardCharsets.UTF_8)
+    string
   }
 }

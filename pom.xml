@@ -21,6 +21,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.seanshubin.todo</groupId>
+                <artifactId>todo-specification</artifactId>
+                <version>SNAPSHOT-1.0.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.seanshubin.todo</groupId>
                 <artifactId>todo-persistence-contract</artifactId>
                 <version>${project.version}</version>
             </dependency>

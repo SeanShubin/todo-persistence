@@ -12,6 +12,10 @@
     <dependencies>
         <dependency>
             <groupId>com.seanshubin.todo</groupId>
+            <artifactId>todo-specification</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.seanshubin.todo</groupId>
             <artifactId>todo-persistence-contract</artifactId>
         </dependency>
         <dependency>
