@@ -9,7 +9,6 @@
     drop [[com seanshubin todo persistence]]
     exclude []
   }
-  allowedInCycle [
-  ]
+  allowedInCycle []
   canFailBuild true
 }
