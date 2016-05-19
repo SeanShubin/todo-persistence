@@ -5,10 +5,10 @@ class Dispatcher(interpreter: Interpreter, health: HealthCheck) extends RequestV
     try {
       (request.method, request.subject) match {
         case ("POST", "/task-event") =>
-          val responseBody = interpreter.execute(request.body)
-          ResponseValue(201, responseBody)
+          val responseBody = StringUtil.normalizeLines(interpreter.execute(request.body))
+          ResponseValue(200, responseBody)
         case ("GET", "/task") =>
-          val responseBody = TaskFormatter.tasksToString(interpreter.tasks)
+          val responseBody = StringUtil.normalizeLines(TaskFormatter.tasksToString(interpreter.tasks))
           ResponseValue(200, responseBody)
         case ("GET", "/health") =>
           health.check()
