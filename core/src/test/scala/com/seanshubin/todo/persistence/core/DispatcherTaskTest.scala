@@ -72,7 +72,7 @@ class DispatcherTaskTest extends FunSuite {
   def createDispatcher(): Dispatcher = {
     val tasks = Tasks.Empty
     val dummyHealth = null
-    val interpreter = new StatefulInterpreter(tasks)
+    val interpreter = new StatefulInterpreterNotThreadSafe(tasks)
     val dispatcher = new Dispatcher(interpreter, dummyHealth)
     dispatcher
   }

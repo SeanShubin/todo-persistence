@@ -8,7 +8,13 @@ import com.seanshubin.todo.persistence.contract.FilesContract
 
 import scala.collection.JavaConverters._
 
-class StoringInterpreter(clock: Clock, files: FilesContract, delegate: Interpreter, dataFileDirectory: Path, dataFileName: String, charset: Charset) extends Interpreter {
+class StoringInterpreter(clock: Clock,
+                         files: FilesContract,
+                         delegate: Interpreter,
+                         dataFileDirectory: Path,
+                         lock: Lock,
+                         dataFileName: String,
+                         charset: Charset) extends Interpreter {
   private val dataFile = dataFileDirectory.resolve(dataFileName)
 
   override def tasks: Tasks = delegate.tasks
@@ -17,7 +23,7 @@ class StoringInterpreter(clock: Clock, files: FilesContract, delegate: Interpret
     val command = CommandParser.parse(line)
     val timestamp = clock.instant()
     val timestampedLine = TimestampedCommandFormatter.format(timestamp, command)
-    val result = synchronized {
+    val result = lock.doWithLock {
       storeLine(timestampedLine)
       delegate.execute(line)
     }

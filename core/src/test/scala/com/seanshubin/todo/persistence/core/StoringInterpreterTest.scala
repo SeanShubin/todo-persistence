@@ -21,7 +21,8 @@ class StoringInterpreterTest extends FunSuite {
     val delegate = new StubInterpreter("command result")
     val dataFileDirectory = Paths.get("/data/file/directory")
     val dataFileName = "data-file.txt"
-    val interpreter = new StoringInterpreter(clock, files, delegate, dataFileDirectory, dataFileName, charset)
+    val lock = new NoOperationLock
+    val interpreter = new StoringInterpreter(clock, files, delegate, dataFileDirectory, lock, dataFileName, charset)
     //when
     val result = interpreter.execute("add Task A")
     //then
@@ -62,6 +63,10 @@ class StoringInterpreterTest extends FunSuite {
     def linesToSeq(lines: Iterable[_ <: CharSequence]): Seq[String] = {
       lines.asScala.map(_.asInstanceOf[String]).toSeq
     }
+  }
+
+  class NoOperationLock extends Lock {
+    override def doWithLock[T](f: => T): T = f
   }
 
 }
