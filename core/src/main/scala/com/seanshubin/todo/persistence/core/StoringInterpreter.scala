@@ -17,8 +17,10 @@ class StoringInterpreter(clock: Clock, files: FilesContract, delegate: Interpret
     val command = CommandParser.parse(line)
     val timestamp = clock.instant()
     val timestampedLine = TimestampedCommandFormatter.format(timestamp, command)
-    storeLine(timestampedLine)
-    val result = delegate.execute(line)
+    val result = synchronized {
+      storeLine(timestampedLine)
+      delegate.execute(line)
+    }
     result
   }
 
