@@ -1,7 +1,5 @@
 package com.seanshubin.todo.persistence.core
 
-import java.nio.charset.StandardCharsets
-
 import org.scalatest.FunSuite
 
 /*
@@ -19,7 +17,7 @@ class DispatcherTaskTest extends FunSuite {
     //when
     val response = dispatcher.handle(request)
     //then
-    assert(response === ResponseValue(201, "1 false Task A"))
+    assert(response === ResponseValue(200, "1 false Task A"))
   }
 
   test("add several") {
@@ -31,7 +29,7 @@ class DispatcherTaskTest extends FunSuite {
     dispatcher.handle(RequestValue("POST", "/task-event", "add Task C"))
     val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
-    assert(response === ResponseValue(200, "1 false Task A\n2 false Task B\n3 false Task C"))
+    assert(response === ResponseValue(200, StringUtil.normalizeLines("1 false Task A\n2 false Task B\n3 false Task C")))
   }
 
   test("done") {
@@ -68,7 +66,7 @@ class DispatcherTaskTest extends FunSuite {
     dispatcher.handle(RequestValue("POST", "/task-event", "clear"))
     val response = dispatcher.handle(RequestValue("GET", "/task"))
     //then
-    assert(response === ResponseValue(200, "1 false Task A\n3 false Task C"))
+    assert(response === ResponseValue(200, StringUtil.normalizeLines("1 false Task A\n3 false Task C")))
   }
 
   def createDispatcher(): Dispatcher = {
