@@ -78,7 +78,8 @@ class SpecificationTest extends FunSuite {
     assert(actual === expected)
   }
 
-  def loadResource(name: String): String = {
+  def loadResource(rawName: String): String = {
+    val name = "serve-from-classpath/" + rawName
     val inputStream = getClass.getClassLoader.getResourceAsStream(name)
     if (inputStream == null) {
       throw new RuntimeException(s"Unable to load resource named $name")
