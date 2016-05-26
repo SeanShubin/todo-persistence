@@ -2,13 +2,6 @@ package com.seanshubin.todo.persistence.core
 
 import org.scalatest.FunSuite
 
-/*
- test-driven-009
- Start the test with the high level expectations, without working about implementation details
- Especially don't create a connection with javas servlet API, we want our design to be platform neutral
- This allows us to focus on making our code easy to test
- It also makes our code more generic
- */
 class DispatcherTaskTest extends FunSuite {
   test("add") {
     //given

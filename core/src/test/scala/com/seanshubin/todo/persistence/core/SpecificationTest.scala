@@ -4,6 +4,10 @@ import java.nio.charset.StandardCharsets
 
 import org.scalatest.FunSuite
 
+/*
+ test-driven-011
+ Continuing top down, we start with implementing the same specification that the application depends on
+ */
 class SpecificationTest extends FunSuite {
   test("get tasks") {
     //given
