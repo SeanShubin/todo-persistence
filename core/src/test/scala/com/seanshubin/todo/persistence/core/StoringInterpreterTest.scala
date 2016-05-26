@@ -21,7 +21,7 @@ class StoringInterpreterTest extends FunSuite {
     val delegate = new StubInterpreter("command result")
     val dataFileDirectory = Paths.get("/data/file/directory")
     val dataFileName = "data-file.txt"
-    val lock = new NoOperationLock
+    val lock = new StubLock
     val interpreter = new StoringInterpreter(clock, files, delegate, dataFileDirectory, lock, dataFileName, charset)
     //when
     val result = interpreter.execute("add Task A")
@@ -30,6 +30,7 @@ class StoringInterpreterTest extends FunSuite {
     assert(delegate.forwardedCommands === Seq("add Task A"))
     assert(files.contentsByFile.size === 1)
     assert(files.contentsByFile((Paths.get("/data/file/directory/data-file.txt"), charset)) === Seq("2016-05-13T19:18:36.091Z add Task A"))
+    assert(lock.invocationCount === 1)
   }
 
   class StubInterpreter(result: String) extends Interpreter {
@@ -65,8 +66,13 @@ class StoringInterpreterTest extends FunSuite {
     }
   }
 
-  class NoOperationLock extends Lock {
-    override def doWithLock[T](f: => T): T = f
+  class StubLock extends Lock {
+    var invocationCount = 0
+
+    override def doWithLock[T](f: => T): T = {
+      invocationCount += 1
+      f
+    }
   }
 
 }
