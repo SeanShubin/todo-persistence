@@ -1,21 +1,25 @@
 package com.seanshubin.todo.persistence.core
 
-class Dispatcher(interpreter: Interpreter, health: HealthCheck) extends RequestValueHandler {
+class Dispatcher(handlersBySubject: Map[String, RequestValueHandler]) extends RequestValueHandler {
   override def handle(request: RequestValue): ResponseValue = {
-    try {
-      (request.method, request.subject) match {
-        case ("POST", "/task-event") =>
-          val responseBody = StringUtil.normalizeLines(interpreter.execute(request.body))
-          ResponseValue(200, responseBody)
-        case ("GET", "/task") =>
-          val responseBody = StringUtil.normalizeLines(TaskFormatter.tasksToString(interpreter.tasks))
-          ResponseValue(200, responseBody)
-        case ("GET", "/health") =>
-          health.check()
-        case _ => ResponseValue(405, s"Not allowed to apply method ${request.method} to subject ${request.subject}")
+    val method = request.method
+    val subject = subjectOf(request)
+    handlersBySubject.get(subject) match {
+      case Some(handler) => try {
+        handler.handle(request)
+      } catch {
+        case ex: Exception =>
+          val exceptionString = ExceptionUtil.toString(ex)
+          val message = s"When trying to apply method $method to subject $subject, got the following exception:\n$exceptionString"
+          ResponseValue(500, message)
       }
-    } catch {
-      case ex: Exception => ResponseValue(500, s"Exception with message '${ex.getMessage}' when trying to apply method ${request.method} to subject ${request.subject}")
+      case None => ResponseValue(404, s"Not allowed to apply method $method to subject $subject")
     }
+  }
+
+  private def subjectOf(request: RequestValue): String = {
+    val RequestPattern = "/([^/]*).*".r
+    val RequestPattern(subject) = request.path
+    subject
   }
 }

@@ -7,10 +7,10 @@ import com.seanshubin.todo.persistence.contract.FilesContract
 
 import scala.collection.JavaConverters._
 
-class FileSystemHealthCheck(files: FilesContract, dataFileDirectory: Path, healthCheckFileName: String, charset: Charset) extends HealthCheck {
+class HealthCheckHandler(files: FilesContract, dataFileDirectory: Path, healthCheckFileName: String, charset: Charset) extends RequestValueHandler {
   private val healthCheckFile = dataFileDirectory.resolve(healthCheckFileName)
 
-  override def check(): ResponseValue = {
+  override def handle(request: RequestValue): ResponseValue = {
     try {
       initialize()
       val oldNumber = readNumber()

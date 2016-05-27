@@ -22,9 +22,16 @@ trait ConfigurationWiring {
   lazy val storingInterpreter: Interpreter = new StoringInterpreter(
     clock, files, statefulInterpreter, configuration.dataFileDirectory, lock, dataFileName, charset)
   lazy val loadingInterpreter: Interpreter = new LoadingInterpreter(statefulInterpreter)
-  lazy val health: HealthCheck = new FileSystemHealthCheck(
+  lazy val healthCheckHandler: RequestValueHandler = new HealthCheckHandler(
     files, configuration.dataFileDirectory, healthCheckFileName, charset)
-  lazy val dispatcher: RequestValueHandler = new Dispatcher(storingInterpreter, health)
+  lazy val taskHandler: RequestValueHandler = new TaskHandler(statefulInterpreter)
+  lazy val taskEventHandler: RequestValueHandler = new TaskEventHandler(statefulInterpreter)
+  lazy val handlersBySubject: Map[String, RequestValueHandler] = Map(
+    "health" -> healthCheckHandler,
+    "task-event" -> taskEventHandler,
+    "task" -> taskHandler
+  )
+  lazy val dispatcher: RequestValueHandler = new Dispatcher(handlersBySubject)
   lazy val jettyHandler: Handler = new HandlerAdapter(dispatcher, charset)
   lazy val preLoader: PreLoader = new FileSystemPreLoader(
     configuration.dataFileDirectory, files, charset, loadingInterpreter, dataFileName)

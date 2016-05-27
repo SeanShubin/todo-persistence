@@ -12,7 +12,7 @@ import org.scalatest.FunSuite
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
-class HealthCheckTest extends FunSuite {
+class HealthCheckHandlerTest extends FunSuite {
   val charset = StandardCharsets.UTF_8
 
   test("health check data already exists") {
@@ -23,9 +23,10 @@ class HealthCheckTest extends FunSuite {
 
       override def contentsByFile: Map[(Path, Charset), Seq[String]] = Map((path, charset) -> Seq("123"))
     }
+    val dummyRequest = RequestValue("GET", "/health")
 
     //when
-    val response = helper.healthCheck.check()
+    val response = helper.healthCheck.handle(dummyRequest)
 
     //then
     assert(response.statusCode === 200)
@@ -44,7 +45,7 @@ class HealthCheckTest extends FunSuite {
     lazy val files = new StubFiles(existingFiles, contentsByFile)
     lazy val dataFileDirectory = Paths.get("/data/file/directory")
     lazy val healthCheckFileName = "health-check-file.txt"
-    lazy val healthCheck = new FileSystemHealthCheck(files, dataFileDirectory, healthCheckFileName, charset)
+    lazy val healthCheck = new HealthCheckHandler(files, dataFileDirectory, healthCheckFileName, charset)
   }
 
   class StubFiles(existingFiles: Set[Path], initialContentsByFile: Map[(Path, Charset), Seq[String]]) extends FilesNotImplemented {

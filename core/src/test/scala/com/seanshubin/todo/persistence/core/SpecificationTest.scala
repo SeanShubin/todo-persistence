@@ -95,10 +95,16 @@ class SpecificationTest extends FunSuite {
   }
 
   def createDispatcher(): Dispatcher = {
-    val tasks = Tasks.Empty
-    val dummyHealth = null
+    createDispatcher(Tasks.Empty)
+  }
+
+  def createDispatcher(tasks: Tasks): Dispatcher = {
     val interpreter = new StatefulInterpreterNotThreadSafe(tasks)
-    val dispatcher = new Dispatcher(interpreter, dummyHealth)
+    val handlersBySubject: Map[String, RequestValueHandler] = Map(
+      "task-event" -> new TaskEventHandler(interpreter),
+      "task" -> new TaskHandler(interpreter)
+    )
+    val dispatcher = new Dispatcher(handlersBySubject)
     dispatcher
   }
 
@@ -133,12 +139,5 @@ class SpecificationTest extends FunSuite {
       }
     }
     skipBeforeBody(lines.toList)
-  }
-
-  def createDispatcher(tasks: Tasks): Dispatcher = {
-    val dummyHealth = null
-    val interpreter = new StatefulInterpreterNotThreadSafe(tasks)
-    val dispatcher = new Dispatcher(interpreter, dummyHealth)
-    dispatcher
   }
 }

@@ -34,7 +34,7 @@ class HandlerAdapterTest extends FunSuite {
     //then
     assert(delegate.requests.size === 1)
     assert(delegate.requests.head.method === "the method")
-    assert(delegate.requests.head.subject === "/path info")
+    assert(delegate.requests.head.path === "/path info")
     assert(delegate.requests.head.body === "request content")
     assert(response.status === responseStatusCode)
     assert(response.outputStream.content === "response body")
