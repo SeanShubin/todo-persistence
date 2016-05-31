@@ -4,6 +4,10 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-013
+ Dispatch logic can be generic
+ */
 class DispatcherTest extends FunSuite {
   test("unknown request") {
     //given

@@ -5,8 +5,13 @@ import java.nio.charset.StandardCharsets
 import org.scalatest.FunSuite
 
 /*
- test-driven-011
- Continuing top down, we start with implementing the same specification that the application depends on
+ test-driven-015
+ Now that we have reached the business layer, we have to make sure we honor the specification
+ This forces to design a good bit of the application structure
+ As long as we stay within the deterministic, we can let this test drive the design
+ If we want, we can also create more specific tests for the individual parts we create, we will do that with StatefulInterpreter
+ For now, use the in memory implementation
+ Now we can actually run the front-end and demo the application
  */
 class SpecificationTest extends FunSuite {
   test("get tasks") {

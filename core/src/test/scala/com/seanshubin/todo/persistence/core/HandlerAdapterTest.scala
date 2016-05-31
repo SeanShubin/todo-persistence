@@ -9,6 +9,10 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-012
+ Get a contract between us and jetty, so we isolate our business logic from jetty specific details
+ */
 class HandlerAdapterTest extends FunSuite {
   val charset = StandardCharsets.UTF_8
 

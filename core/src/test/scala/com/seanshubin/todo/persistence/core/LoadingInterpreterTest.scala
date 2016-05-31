@@ -4,6 +4,10 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-019
+ Load from disk
+ */
 class LoadingInterpreterTest extends FunSuite {
   test("remove timestamps before forwarding command") {
     //given

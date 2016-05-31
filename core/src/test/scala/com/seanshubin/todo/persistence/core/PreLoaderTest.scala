@@ -11,6 +11,10 @@ import org.scalatest.FunSuite
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-018
+ Start with correct initial state
+ */
 class PreLoaderTest extends FunSuite {
   test("load existing file") {
     //given

@@ -11,6 +11,10 @@ import org.scalatest.FunSuite
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-017
+ Persist to disk
+ */
 class StoringInterpreterTest extends FunSuite {
   val charset = StandardCharsets.UTF_8
   test("remove timestamps before forwarding command") {

@@ -2,6 +2,10 @@ package com.seanshubin.todo.persistence.core
 
 import org.scalatest.FunSuite
 
+/*
+ test-driven-016
+ Test the business logic, isolated from any knowledge of how it is served
+ */
 class StatefulInterpreterTest extends FunSuite {
   test("add") {
     //given

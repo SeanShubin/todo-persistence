@@ -8,6 +8,10 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
+/*
+ test-driven-011
+ Since we are using service oriented architecture, start with a jetty server
+ */
 class JettyRunnerTest extends FunSuite {
   test("jetty runner") {
     //given

@@ -35,5 +35,6 @@ trait ConfigurationWiring {
   lazy val jettyHandler: Handler = new HandlerAdapter(dispatcher, charset)
   lazy val preLoader: PreLoader = new FileSystemPreLoader(
     configuration.dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
-  lazy val runner: Runnable = new JettyRunner(configuration.port, JettyServerDelegate.create, jettyHandler, preLoader)
+  lazy val runner: Runnable = new JettyRunner(
+    configuration.port, JettyServerDelegate.create, jettyHandler, preLoader)
 }
