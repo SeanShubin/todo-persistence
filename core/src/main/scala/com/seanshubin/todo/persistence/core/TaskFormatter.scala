@@ -2,7 +2,7 @@ package com.seanshubin.todo.persistence.core
 
 object TaskFormatter {
   def tasksToString(tasks: Tasks): String = {
-    tasks.asOrderedSequence.map(taskToString).mkString("\n")
+    tasks.asOrderedSequence().map(taskToString).mkString("\n")
 
   }
 

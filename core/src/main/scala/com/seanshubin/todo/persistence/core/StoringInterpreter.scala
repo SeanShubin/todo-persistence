@@ -17,7 +17,9 @@ class StoringInterpreter(clock: Clock,
                          charset: Charset) extends Interpreter {
   private val dataFile = dataFileDirectory.resolve(dataFileName)
 
-  override def tasks: Tasks = delegate.tasks
+  override def tasks: Tasks = {
+    delegate.tasks
+  }
 
   override def execute(line: String): String = {
     val command = CommandParser.parse(line)
