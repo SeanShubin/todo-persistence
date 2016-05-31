@@ -25,7 +25,7 @@ trait ConfigurationWiring {
   lazy val healthCheckHandler: RequestValueHandler = new HealthCheckHandler(
     files, configuration.dataFileDirectory, healthCheckFileName, charset)
   lazy val taskHandler: RequestValueHandler = new TaskHandler(statefulInterpreter)
-  lazy val taskEventHandler: RequestValueHandler = new TaskEventHandler(statefulInterpreter)
+  lazy val taskEventHandler: RequestValueHandler = new TaskEventHandler(storingInterpreter)
   lazy val handlersBySubject: Map[String, RequestValueHandler] = Map(
     "health" -> healthCheckHandler,
     "task-event" -> taskEventHandler,
