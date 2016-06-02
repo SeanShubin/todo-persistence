@@ -1,6 +1,7 @@
 package com.seanshubin.todo.persistence.console
 
 import java.nio.charset.{Charset, StandardCharsets}
+import java.nio.file.Path
 import java.time.Clock
 
 import com.seanshubin.todo.persistence.contract.{FilesContract, FilesDelegate}
@@ -10,6 +11,8 @@ import org.eclipse.jetty.server.Handler
 trait ConfigurationWiring {
   def configuration: Configuration
 
+  lazy val port: Int = configuration.port
+  lazy val dataFileDirectory: Path = configuration.dataFileDirectory
   lazy val monitor = new AnyRef
   lazy val dataFileName: String = "tasks.txt"
   lazy val healthCheckFileName: String = "health.txt"
@@ -20,10 +23,10 @@ trait ConfigurationWiring {
   lazy val files: FilesContract = FilesDelegate
   lazy val lock: Lock = new JavaMonitorLock(monitor)
   lazy val storingInterpreter: Interpreter = new StoringInterpreter(
-    clock, files, statefulInterpreter, configuration.dataFileDirectory, lock, dataFileName, charset)
+    clock, files, statefulInterpreter, dataFileDirectory, lock, dataFileName, charset)
   lazy val loadingInterpreter: Interpreter = new LoadingInterpreter(statefulInterpreter)
   lazy val healthCheckHandler: RequestValueHandler = new HealthCheckHandler(
-    files, configuration.dataFileDirectory, healthCheckFileName, charset)
+    files, dataFileDirectory, healthCheckFileName, charset)
   lazy val taskHandler: RequestValueHandler = new TaskHandler(statefulInterpreter)
   lazy val taskEventHandler: RequestValueHandler = new TaskEventHandler(storingInterpreter)
   lazy val handlersBySubject: Map[String, RequestValueHandler] = Map(
@@ -32,9 +35,9 @@ trait ConfigurationWiring {
     "task" -> taskHandler
   )
   lazy val dispatcher: RequestValueHandler = new Dispatcher(handlersBySubject)
-  lazy val jettyHandler: Handler = new HandlerAdapter(dispatcher, charset)
+  lazy val handlerAdapter: Handler = new HandlerAdapter(dispatcher, charset)
   lazy val preLoader: PreLoader = new FileSystemPreLoader(
-    configuration.dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
+    dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
   lazy val runner: Runnable = new JettyRunner(
-    configuration.port, JettyServerDelegate.create, jettyHandler, preLoader)
+    port, JettyServerDelegate.create, handlerAdapter, preLoader)
 }
