@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
 /*
- test-driven-017
+ test-driven-018
  Persist to disk
  */
 class StoringInterpreterTest extends FunSuite {
@@ -27,8 +27,10 @@ class StoringInterpreterTest extends FunSuite {
     val dataFileName = "data-file.txt"
     val lock = new StubLock
     val interpreter = new StoringInterpreter(clock, files, delegate, dataFileDirectory, lock, dataFileName, charset)
+
     //when
     val result = interpreter.execute("add Task A")
+
     //then
     assert(result === "command result")
     assert(delegate.forwardedCommands === Seq("add Task A"))

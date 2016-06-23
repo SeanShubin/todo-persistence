@@ -7,7 +7,10 @@ import com.seanshubin.todo.persistence.contract.FilesContract
 
 import scala.collection.JavaConverters._
 
-class HealthCheckHandler(files: FilesContract, dataFileDirectory: Path, healthCheckFileName: String, charset: Charset) extends RequestValueHandler {
+class HealthCheckHandler(files: FilesContract,
+                         dataFileDirectory: Path,
+                         healthCheckFileName: String,
+                         charset: Charset) extends HealthCheckHandlerMarker {
   private val healthCheckFile = dataFileDirectory.resolve(healthCheckFileName)
 
   override def handle(request: RequestValue): ResponseValue = {

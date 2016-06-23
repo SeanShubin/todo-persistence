@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import scala.collection.mutable.ArrayBuffer
 
 /*
- test-driven-019
+ test-driven-020
  Load from disk
  */
 class LoadingInterpreterTest extends FunSuite {
@@ -13,8 +13,10 @@ class LoadingInterpreterTest extends FunSuite {
     //given
     val delegate = new StubInterpreter("command result")
     val interpreter = new LoadingInterpreter(delegate)
+
     //when
     val result = interpreter.execute("2016-05-13T19:18:18.647Z add Task A")
+
     //then
     assert(result === "command result")
     assert(delegate.forwardedCommands === Seq("add Task A"))

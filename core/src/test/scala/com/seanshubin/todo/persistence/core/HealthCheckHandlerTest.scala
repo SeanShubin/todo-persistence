@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.ArrayBuffer
 
 /*
- test-driven-014
+ test-driven-015
  Expose an endpoint for clients of this service to determine if they are configured correctly and that this service has what it needs to run
  */
 class HealthCheckHandlerTest extends FunSuite {

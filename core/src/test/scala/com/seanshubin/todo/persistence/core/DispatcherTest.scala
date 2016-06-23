@@ -14,8 +14,10 @@ class DispatcherTest extends FunSuite {
     val handlersBySubject = Map[String, RequestValueHandler]()
     val dispatcher = createDispatcher(handlersBySubject)
     val request = RequestValue(method = "foo", path = "/bar/path", body = "baz")
+
     //when
     val response = dispatcher.handle(request)
+
     //then
     assert(response === ResponseValue(404, "Not allowed to apply method foo to subject bar"))
   }
@@ -27,8 +29,10 @@ class DispatcherTest extends FunSuite {
     val handlerThatThrows = new HandlerThatThrows(exception)
     val handlersBySubject = Map("fragile" -> handlerThatThrows)
     val dispatcher = createDispatcher(handlersBySubject)
+
     //when
     val response = dispatcher.handle(RequestValue("GET", "/fragile/path"))
+
     //then
     assert(response === ResponseValue(500, "When trying to apply method GET to subject fragile, got the following exception:\n" + expectedExceptionString))
   }

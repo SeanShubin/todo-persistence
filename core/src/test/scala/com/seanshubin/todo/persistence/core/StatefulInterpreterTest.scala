@@ -3,7 +3,7 @@ package com.seanshubin.todo.persistence.core
 import org.scalatest.FunSuite
 
 /*
- test-driven-016
+ test-driven-017
  Test the business logic, isolated from any knowledge of how it is served
  */
 class StatefulInterpreterTest extends FunSuite {
@@ -11,8 +11,10 @@ class StatefulInterpreterTest extends FunSuite {
     //given
     val interpreter = createInterpreter()
     val command = "add Task A"
+
     //when
     val response = interpreter.execute(command)
+
     //then
     assert(response === "1 false Task A")
   }
@@ -20,6 +22,7 @@ class StatefulInterpreterTest extends FunSuite {
   test("add several") {
     //given
     val interpreter = createInterpreter()
+
     //when
     interpreter.execute("add Task A")
     interpreter.execute("add Task B")
@@ -37,9 +40,11 @@ class StatefulInterpreterTest extends FunSuite {
   test("done") {
     //given
     val interpreter = createInterpreter()
+
     //when
     interpreter.execute("add Task A")
     interpreter.execute("done 1")
+
     //then
     assert(interpreter.tasks === Tasks(1, Map(
       1 -> Task(1, "Task A", done = true)
@@ -49,10 +54,12 @@ class StatefulInterpreterTest extends FunSuite {
   test("undone") {
     //given
     val interpreter = createInterpreter()
+
     //when
     interpreter.execute("add Task A")
     interpreter.execute("done 1")
     interpreter.execute("undone 1")
+
     //then
     assert(interpreter.tasks === Tasks(1, Map(
       1 -> Task(1, "Task A", done = false)
@@ -62,12 +69,14 @@ class StatefulInterpreterTest extends FunSuite {
   test("clear done") {
     //given
     val interpreter = createInterpreter()
+
     //when
     interpreter.execute("add Task A")
     interpreter.execute("add Task B")
     interpreter.execute("add Task C")
     interpreter.execute("done 2")
     interpreter.execute("clear")
+
     //then
     assert(interpreter.tasks === Tasks(3, Map(
       1 -> Task(1, "Task A", done = false),

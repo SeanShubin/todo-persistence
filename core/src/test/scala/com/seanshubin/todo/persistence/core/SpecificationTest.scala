@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 import org.scalatest.FunSuite
 
 /*
- test-driven-015
+ test-driven-016
  Now that we have reached the business layer, we have to make sure we honor the specification
  This forces to design a good bit of the application structure
  As long as we stay within the deterministic, we can let this test drive the design
@@ -24,8 +24,10 @@ class SpecificationTest extends FunSuite {
       3 -> Task(3, "Task C", done = false)
     ))
     val dispatcher = createDispatcher(tasks)
+
     //when
     val actual = dispatcher.handle(request)
+
     //then
     assert(StringUtil.escape(actual.body) === StringUtil.escape(expected.body))
     assert(actual === expected)
@@ -37,8 +39,10 @@ class SpecificationTest extends FunSuite {
     val expected = loadResponse("todo/specification/task-event/post-task-event-add-response.txt")
     val tasks = Tasks.Empty
     val dispatcher = createDispatcher(tasks)
+
     //when
     val actual = dispatcher.handle(request)
+
     //then
     assert(StringUtil.escape(actual.body) === StringUtil.escape(expected.body))
     assert(actual === expected)
@@ -54,8 +58,10 @@ class SpecificationTest extends FunSuite {
       3 -> Task(3, "Task C", done = false)
     ))
     val dispatcher = createDispatcher(tasks)
+
     //when
     val actual = dispatcher.handle(request)
+
     //then
     assert(StringUtil.escape(actual.body) === StringUtil.escape(expected.body))
     assert(actual === expected)
@@ -67,8 +73,10 @@ class SpecificationTest extends FunSuite {
     val expected = loadResponse("todo/specification/task-event/post-task-event-done-response.txt")
     val tasks = Tasks(lastId = 1, tasks = Map(1 -> Task(1, "Task A", done = false)))
     val dispatcher = createDispatcher(tasks)
+
     //when
     val actual = dispatcher.handle(request)
+
     //then
     assert(StringUtil.escape(actual.body) === StringUtil.escape(expected.body))
     assert(actual === expected)
@@ -80,8 +88,10 @@ class SpecificationTest extends FunSuite {
     val expected = loadResponse("todo/specification/task-event/post-task-event-undone-response.txt")
     val tasks = Tasks(lastId = 1, tasks = Map(1 -> Task(1, "Task A", done = true)))
     val dispatcher = createDispatcher(tasks)
+
     //when
     val actual = dispatcher.handle(request)
+
     //then
     assert(StringUtil.escape(actual.body) === StringUtil.escape(expected.body))
     assert(actual === expected)
