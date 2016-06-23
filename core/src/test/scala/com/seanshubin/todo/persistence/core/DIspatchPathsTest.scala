@@ -3,7 +3,7 @@ package com.seanshubin.todo.persistence.core
 import org.scalatest.FunSuite
 
 /*
- test-driven-014
+ test-driven-013
  Put the actual dispatch paths behind a contract, so we can test it
  */
 class DispatchPathsTest extends FunSuite {
