@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
  test-driven-013
  Put the actual dispatch paths behind a contract, so we can test it
  */
-class DispatchPathsTest extends FunSuite {
+class DispatchPathsTestRename extends FunSuite {
   test("get task") {
     //given
     val dispatcher = createDispatcher()
