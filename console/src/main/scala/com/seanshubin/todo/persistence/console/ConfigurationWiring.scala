@@ -34,14 +34,14 @@ trait ConfigurationWiring {
   val clock: Clock = Clock.systemUTC()
   val statefulInterpreter: StatefulInterpreterMarker =
     new StatefulInterpreterNotThreadSafe(initialTasks)
-  val lock: Lock = new JavaMonitorLock(monitor)
+  val criticalSection: CriticalSection = new JavaMonitorCriticalSection(monitor)
   val dataFileName: String = "tasks.txt"
   val files: FilesContract = FilesDelegate
   val dataFileDirectory: Path = configuration.dataFileDirectory
   val healthCheckFileName: String = "health.txt"
   val charset: Charset = StandardCharsets.UTF_8
   val storingInterpreter: StoringInterpreterMarker = new StoringInterpreter(
-    clock, files, statefulInterpreter, dataFileDirectory, lock, dataFileName, charset)
+    clock, files, statefulInterpreter, dataFileDirectory, criticalSection, dataFileName, charset)
   val healthCheckHandler: HealthCheckHandlerMarker = new HealthCheckHandler(
     files, dataFileDirectory, healthCheckFileName, charset)
   val taskHandler: TaskHandlerMarker = new TaskHandler(statefulInterpreter)

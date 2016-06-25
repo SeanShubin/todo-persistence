@@ -12,7 +12,7 @@ class StoringInterpreter(clock: Clock,
                          files: FilesContract,
                          delegate: StatefulInterpreterMarker,
                          dataFileDirectory: Path,
-                         lock: Lock,
+                         criticalSection: CriticalSection,
                          dataFileName: String,
                          charset: Charset) extends StoringInterpreterMarker {
   private val dataFile = dataFileDirectory.resolve(dataFileName)
@@ -25,7 +25,7 @@ class StoringInterpreter(clock: Clock,
     val command = CommandParser.parse(line)
     val timestamp = clock.instant()
     val timestampedLine = TimestampedCommandFormatter.format(timestamp, command)
-    val result = lock.doWithLock {
+    val result = criticalSection.doWithCriticalSection {
       storeLine(timestampedLine)
       delegate.execute(line)
     }
