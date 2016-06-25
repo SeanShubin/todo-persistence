@@ -1,6 +1,6 @@
 package com.seanshubin.todo.persistence.core
 
-class StatefulInterpreterNotThreadSafe(initialTasks: Tasks) extends Interpreter {
+class StatefulInterpreterNotThreadSafe(initialTasks: Tasks) extends StatefulInterpreterMarker {
   private var mutableTasks: Tasks = initialTasks
 
   override def tasks: Tasks = {

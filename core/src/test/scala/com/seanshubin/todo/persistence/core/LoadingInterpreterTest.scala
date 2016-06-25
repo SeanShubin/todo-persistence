@@ -22,7 +22,7 @@ class LoadingInterpreterTest extends FunSuite {
     assert(delegate.forwardedCommands === Seq("add Task A"))
   }
 
-  class StubInterpreter(result: String) extends Interpreter {
+  class StubInterpreter(result: String) extends StatefulInterpreterMarker {
     val forwardedCommands = new ArrayBuffer[String]
 
     override def tasks: Tasks = ???

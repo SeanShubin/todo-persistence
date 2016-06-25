@@ -29,39 +29,38 @@ import org.eclipse.jetty.server.Handler
 trait ConfigurationWiring {
   def configuration: Configuration
 
-  lazy val initialTasks: Tasks = Tasks.Empty
-  lazy val monitor = new AnyRef
-  lazy val clock: Clock = Clock.systemUTC()
-  lazy val statefulInterpreter: Interpreter =
+  val initialTasks: Tasks = Tasks.Empty
+  val monitor = new AnyRef
+  val clock: Clock = Clock.systemUTC()
+  val statefulInterpreter: StatefulInterpreterMarker =
     new StatefulInterpreterNotThreadSafe(initialTasks)
-  lazy val lock: Lock = new JavaMonitorLock(monitor)
-  lazy val dataFileName: String = "tasks.txt"
-  lazy val files: FilesContract = FilesDelegate
-  lazy val dataFileDirectory: Path = configuration.dataFileDirectory
-  lazy val healthCheckFileName: String = "health.txt"
-  lazy val charset: Charset = StandardCharsets.UTF_8
-  lazy val storingInterpreter: Interpreter = new StoringInterpreter(
+  val lock: Lock = new JavaMonitorLock(monitor)
+  val dataFileName: String = "tasks.txt"
+  val files: FilesContract = FilesDelegate
+  val dataFileDirectory: Path = configuration.dataFileDirectory
+  val healthCheckFileName: String = "health.txt"
+  val charset: Charset = StandardCharsets.UTF_8
+  val storingInterpreter: StoringInterpreterMarker = new StoringInterpreter(
     clock, files, statefulInterpreter, dataFileDirectory, lock, dataFileName, charset)
-  lazy val healthCheckHandler: HealthCheckHandlerMarker = new HealthCheckHandler(
+  val healthCheckHandler: HealthCheckHandlerMarker = new HealthCheckHandler(
     files, dataFileDirectory, healthCheckFileName, charset)
-  lazy val taskHandler: TaskHandlerMarker = new TaskHandler(statefulInterpreter)
-  lazy val taskEventHandler: TaskEventHandlerMarker = new TaskEventHandler(storingInterpreter)
-  lazy val dispatcher: RequestValueHandler = new DispatchPaths(healthCheckHandler, taskHandler, taskEventHandler)
-  lazy val loadingInterpreter: Interpreter = new LoadingInterpreter(statefulInterpreter)
-  lazy val port: Int = configuration.port
-  lazy val createJettyServer: Int => JettyServerContract = JettyServerDelegate.create
-  lazy val handlerAdapter: Handler = new HandlerAdapter(dispatcher, charset)
-  lazy val preLoader: PreLoader = new FileSystemPreLoader(
+  val taskHandler: TaskHandlerMarker = new TaskHandler(statefulInterpreter)
+  val taskEventHandler: TaskEventHandlerMarker = new TaskEventHandler(storingInterpreter)
+  val dispatcher: RequestValueHandler = new DispatchPaths(healthCheckHandler, taskHandler, taskEventHandler)
+  val loadingInterpreter: LoadingInterpreterMarker = new LoadingInterpreter(statefulInterpreter)
+  val port: Int = configuration.port
+  val createJettyServer: Int => JettyServerContract = JettyServerDelegate.create
+  val handlerAdapter: Handler = new HandlerAdapter(dispatcher, charset)
+  val preLoader: PreLoader = new FileSystemPreLoader(
     dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
-  lazy val runner: Runnable = new JettyRunner(
+  val runner: Runnable = new JettyRunner(
     port, createJettyServer, handlerAdapter, preLoader)
 }
 
 /*
 Alternative designs to consider:
 
-Should the declarations be lazy?
-We could just reify the entire wiring right away.
+Should the declarations be lazy or should everything be reified right away?
 
 For constructor injection, should we use by-name parameters instead of by-value parameters?
 

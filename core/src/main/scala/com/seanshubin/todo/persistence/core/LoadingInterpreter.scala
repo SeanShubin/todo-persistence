@@ -1,6 +1,6 @@
 package com.seanshubin.todo.persistence.core
 
-class LoadingInterpreter(delegate: Interpreter) extends Interpreter {
+class LoadingInterpreter(delegate: StatefulInterpreterMarker) extends LoadingInterpreterMarker {
   override def tasks: Tasks = {
     delegate.tasks
   }

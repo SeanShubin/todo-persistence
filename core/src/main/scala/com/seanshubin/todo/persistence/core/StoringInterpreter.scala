@@ -10,11 +10,11 @@ import scala.collection.JavaConverters._
 
 class StoringInterpreter(clock: Clock,
                          files: FilesContract,
-                         delegate: Interpreter,
+                         delegate: StatefulInterpreterMarker,
                          dataFileDirectory: Path,
                          lock: Lock,
                          dataFileName: String,
-                         charset: Charset) extends Interpreter {
+                         charset: Charset) extends StoringInterpreterMarker {
   private val dataFile = dataFileDirectory.resolve(dataFileName)
 
   override def tasks: Tasks = {

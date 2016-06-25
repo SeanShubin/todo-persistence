@@ -109,17 +109,17 @@ class SpecificationTest extends FunSuite {
     normalizedString
   }
 
-  def createDispatcher(): Dispatcher = {
+  def createDispatcher(): RequestValueHandler = {
     createDispatcher(Tasks.Empty)
   }
 
-  def createDispatcher(tasks: Tasks): Dispatcher = {
-    val interpreter = new StatefulInterpreterNotThreadSafe(tasks)
-    val handlersBySubject: Map[String, RequestValueHandler] = Map(
-      "task-event" -> new TaskEventHandler(interpreter),
-      "task" -> new TaskHandler(interpreter)
-    )
-    val dispatcher = new Dispatcher(handlersBySubject)
+  def createDispatcher(tasks: Tasks): RequestValueHandler = {
+    val statefulInterpreter = new StatefulInterpreterNotThreadSafe(tasks)
+    val storingInterpreter = new StubStoringInterpreter(statefulInterpreter)
+    val taskHandler: TaskHandlerMarker = new TaskHandler(statefulInterpreter)
+    val taskEventHandler: TaskEventHandlerMarker = new TaskEventHandler(storingInterpreter)
+    val dummyHealthCheckHandler: HealthCheckHandlerMarker = null
+    val dispatcher = new DispatchPaths(dummyHealthCheckHandler, taskHandler, taskEventHandler)
     dispatcher
   }
 
@@ -155,4 +155,15 @@ class SpecificationTest extends FunSuite {
     }
     skipBeforeBody(lines.toList)
   }
+
+  class StubStoringInterpreter(delegate: StatefulInterpreterMarker) extends StoringInterpreterMarker {
+    override def tasks: Tasks = {
+      delegate.tasks
+    }
+
+    override def execute(line: String): String = {
+      delegate.execute(line)
+    }
+  }
+
 }

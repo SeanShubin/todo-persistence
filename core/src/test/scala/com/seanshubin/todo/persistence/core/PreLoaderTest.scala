@@ -81,7 +81,7 @@ class PreLoaderTest extends FunSuite {
     }
   }
 
-  class StubInterpreter extends Interpreter {
+  class StubInterpreter extends LoadingInterpreterMarker {
     val linesInterpreted = new ArrayBuffer[String]()
 
     override def tasks: Tasks = ???

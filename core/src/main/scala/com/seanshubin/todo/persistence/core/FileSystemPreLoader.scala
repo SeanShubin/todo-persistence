@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 class FileSystemPreLoader(dataFileDirectory: Path,
                           files: FilesContract,
                           charset: Charset,
-                          interpreter: Interpreter,
+                          interpreter: LoadingInterpreterMarker,
                           dataFileName: String) extends PreLoader {
   override def loadInitialState(): Unit = {
     files.createDirectories(dataFileDirectory)

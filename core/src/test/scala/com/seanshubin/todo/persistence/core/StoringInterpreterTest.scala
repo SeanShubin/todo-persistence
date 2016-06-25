@@ -39,7 +39,7 @@ class StoringInterpreterTest extends FunSuite {
     assert(lock.invocationCount === 1)
   }
 
-  class StubInterpreter(result: String) extends Interpreter {
+  class StubInterpreter(result: String) extends StatefulInterpreterMarker {
     val forwardedCommands = new ArrayBuffer[String]
 
     override def tasks: Tasks = ???
