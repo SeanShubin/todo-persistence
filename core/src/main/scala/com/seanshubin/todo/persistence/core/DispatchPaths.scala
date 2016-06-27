@@ -9,5 +9,7 @@ class DispatchPaths(healthCheckHandler: HealthCheckHandlerMarker,
     "task" -> taskHandler)
   private val dispatcher: RequestValueHandler = new Dispatcher(handlersBySubject)
 
-  override def handle(request: RequestValue): ResponseValue = dispatcher.handle(request)
+  override def handle(request: RequestValue): ResponseValue = {
+    dispatcher.handle(request)
+  }
 }
