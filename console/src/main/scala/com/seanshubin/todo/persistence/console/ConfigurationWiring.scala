@@ -31,7 +31,7 @@ trait ConfigurationWiring {
 
   val initialTasks: Tasks = Tasks.Empty
   val monitor = new AnyRef
-  val clock: Clock = Clock.systemUTC()
+  val clock: Clock = Clock.systemUTC
   val statefulInterpreter: StatefulInterpreterMarker =
     new StatefulInterpreterNotThreadSafe(initialTasks)
   val criticalSection: CriticalSection = new JavaMonitorCriticalSection(monitor)
