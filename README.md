@@ -25,3 +25,7 @@ See [specification project](https://github.com/SeanShubin/todo-specification/blo
         - prove that the web service gets further than it did before, and discover which collaborator is needed next
     - Repeat
         - The positive demo for the previous component becomes the negative demo for the next component, so repeat the process until everything works
+- Demo starting points (get working in this order)
+    - [localhost:7002/health](localhost:7002/health)
+    - [localhost:7002/task](localhost:7002/task)
+    - [localhost:7001](localhost:7001)
