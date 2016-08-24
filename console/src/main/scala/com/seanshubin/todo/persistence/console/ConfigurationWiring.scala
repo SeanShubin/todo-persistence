@@ -5,7 +5,7 @@ import java.nio.file.Path
 import java.time.Clock
 
 import com.seanshubin.todo.persistence.contract.{FilesContract, FilesDelegate}
-import com.seanshubin.todo.persistence.core._
+import com.seanshubin.todo.persistence.domain._
 import org.eclipse.jetty.server.Handler
 
 /*

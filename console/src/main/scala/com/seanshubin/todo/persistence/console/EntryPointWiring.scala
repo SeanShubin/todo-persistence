@@ -1,6 +1,6 @@
 package com.seanshubin.todo.persistence.console
 
-import com.seanshubin.todo.persistence.core._
+import com.seanshubin.todo.persistence.domain._
 
 trait EntryPointWiring {
   def commandLineArguments: Seq[String]
