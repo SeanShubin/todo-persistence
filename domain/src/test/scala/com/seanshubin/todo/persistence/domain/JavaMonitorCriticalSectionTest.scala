@@ -8,17 +8,17 @@ import org.scalatest.FunSuite
  For example, if the critical section mechanism is not working, you won't be able to tell by demoing it
  */
 class JavaMonitorCriticalSectionTest extends FunSuite {
-  test("java monitor critical section") {
-    //given
-    val monitor = new AnyRef
-    val criticalSection = new JavaMonitorCriticalSection(monitor)
-
-    //when
-    val result = criticalSection.doWithCriticalSection {
-      2 + 2
-    }
-
-    //then
-    assert(result === 4)
-  }
+//  test("java monitor critical section") {
+//    //given
+//    val monitor = new AnyRef
+//    val criticalSection = new JavaMonitorCriticalSection(monitor)
+//
+//    //when
+//    val result = criticalSection.doWithCriticalSection {
+//      2 + 2
+//    }
+//
+//    //then
+//    assert(result === 4)
+//  }
 }

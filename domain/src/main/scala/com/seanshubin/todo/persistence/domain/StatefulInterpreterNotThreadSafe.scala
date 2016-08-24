@@ -1,16 +1,18 @@
 package com.seanshubin.todo.persistence.domain
 
-class StatefulInterpreterNotThreadSafe(initialTasks: Tasks) extends StatefulInterpreterMarker {
-  private var mutableTasks: Tasks = initialTasks
+class StatefulInterpreterNotThreadSafe(/*initialTasks: Tasks*/) extends StatefulInterpreterMarker {
+//  private var mutableTasks: Tasks = initialTasks
 
   override def tasks: Tasks = {
-    mutableTasks
+//    mutableTasks
+    ???
   }
 
   override def execute(line: String): String = {
-    val command = CommandParser.parse(line)
-    val (newTasks, message) = command.apply(mutableTasks)
-    mutableTasks = newTasks
-    message
+//    val command = CommandParser.parse(line)
+//    val (newTasks, message) = command.apply(mutableTasks)
+//    mutableTasks = newTasks
+//    message
+    ???
   }
 }

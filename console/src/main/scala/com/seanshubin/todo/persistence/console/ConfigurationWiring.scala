@@ -29,32 +29,27 @@ import org.eclipse.jetty.server.Handler
 trait ConfigurationWiring {
   def configuration: Configuration
 
-  val initialTasks: Tasks = Tasks.Empty
-  val monitor = new AnyRef
-  val clock: Clock = Clock.systemUTC
-  val statefulInterpreter: StatefulInterpreterMarker =
-    new StatefulInterpreterNotThreadSafe(initialTasks)
-  val criticalSection: CriticalSection = new JavaMonitorCriticalSection(monitor)
-  val dataFileName: String = "tasks.txt"
-  val files: FilesContract = FilesDelegate
-  val dataFileDirectory: Path = configuration.dataFileDirectory
-  val healthCheckFileName: String = "health.txt"
-  val charset: Charset = StandardCharsets.UTF_8
-  val storingInterpreter: StoringInterpreterMarker = new StoringInterpreter(
-    clock, files, statefulInterpreter, dataFileDirectory, criticalSection, dataFileName, charset)
-  val healthCheckHandler: HealthCheckHandlerMarker = new HealthCheckHandler(
-    files, dataFileDirectory, healthCheckFileName, charset)
-  val taskHandler: TaskHandlerMarker = new TaskHandler(statefulInterpreter)
-  val taskEventHandler: TaskEventHandlerMarker = new TaskEventHandler(storingInterpreter)
-  val dispatcher: RequestValueHandler = new DispatchPaths(healthCheckHandler, taskHandler, taskEventHandler)
-  val loadingInterpreter: LoadingInterpreterMarker = new LoadingInterpreter(statefulInterpreter)
-  val port: Int = configuration.port
-  val createJettyServer: Int => JettyServerContract = JettyServerDelegate.create
-  val handlerAdapter: Handler = new HandlerAdapter(dispatcher, charset)
-  val preLoader: PreLoader = new FileSystemPreLoader(
-    dataFileDirectory, files, charset, loadingInterpreter, dataFileName)
-  val runner: Runnable = new JettyRunner(
-    port, createJettyServer, handlerAdapter, preLoader)
+//  val initialTasks: Tasks = Tasks.Empty
+//  val monitor = new AnyRef
+//  val clock: Clock = Clock.systemUTC
+//  val statefulInterpreter: StatefulInterpreterMarker = new StatefulInterpreterNotThreadSafe()
+//  val criticalSection: CriticalSection = new JavaMonitorCriticalSection()
+//  val dataFileName: String = "tasks.txt"
+//  val files: FilesContract = FilesDelegate
+//  val dataFileDirectory: Path = configuration.dataFileDirectory
+//  val healthCheckFileName: String = "health.txt"
+//  val charset: Charset = StandardCharsets.UTF_8
+//  val storingInterpreter: StoringInterpreterMarker = new StoringInterpreter()
+//  val healthCheckHandler: HealthCheckHandlerMarker = new HealthCheckHandler()
+//  val taskHandler: TaskHandlerMarker = new TaskHandler()
+//  val taskEventHandler: TaskEventHandlerMarker = new TaskEventHandler()
+//  val dispatcher: RequestValueHandler = new DispatchPaths()
+//  val loadingInterpreter: LoadingInterpreterMarker = new LoadingInterpreter()
+//  val port: Int = configuration.port
+//  val createJettyServer: Int => JettyServerContract = JettyServerDelegate.create
+//  val handlerAdapter: Handler = new HandlerAdapter()
+//  val preLoader: PreLoader = new FileSystemPreLoader()
+  val runner: Runnable = new JettyRunner()
 }
 
 /*
