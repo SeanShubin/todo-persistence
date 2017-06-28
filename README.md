@@ -8,7 +8,7 @@ See [specification project](https://github.com/SeanShubin/todo-specification/blo
     -     git checkout training
 - rebuild the executable
     -     mvn package
-- implement the ConfigurationWiring
+- implement the ConfigurationDependencyInjection
     - Negative demo
         - prove that the web service is not working in some way, possibly because of an empty implementation
     - Test
@@ -20,7 +20,7 @@ See [specification project](https://github.com/SeanShubin/todo-specification/blo
     - Collaborator Empty Implementation
         - create empty implementations of the collaborators
     - Inject
-        - update the wiring to constructor inject empty implementations of collaborators
+        - update dependency injection to constructor inject empty implementations of collaborators
     - Positive demo
         - prove that the web service gets further than it did before, and discover which collaborator is needed next
     - Repeat

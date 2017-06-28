@@ -20,13 +20,13 @@ import org.eclipse.jetty.server.Handler
 - Collaborator Empty Implementation
     - create empty implementations of the collaborators
 - Inject
-    - update the wiring to constructor inject empty implementations of collaborators
+    - update dependency injection to constructor inject empty implementations of collaborators
 - Positive demo
     - prove that the web service gets further than it did before, and discover which collaborator is needed next
 - Repeat
     - The positive demo for the previous component becomes the negative demo for the next component, so repeat the process until everything works
  */
-trait ConfigurationWiring {
+trait ConfigurationDependencyInjection {
   def configuration: Configuration
 
   val initialTasks: Tasks = Tasks.Empty
@@ -72,5 +72,5 @@ Would using named parameters be sufficient to catch this?
 
 Should logic tests be shallow, where each component uses stub collaborators?
 Or should they be deep, using real collaborators up to but not including non-determinism?
-For the latter case, we could inherit from a wiring that hooks up everything but non-determinism.
+For the latter case, we could inherit from dependency injection that hooks up everything but non-determinism.
 */
