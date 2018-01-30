@@ -104,6 +104,7 @@ class SpecificationTest extends FunSuite {
       throw new RuntimeException(s"Unable to load resource named $name")
     }
     val bytes = IoUtil.inputStreamToBytes(inputStream)
+    inputStream.close()
     val rawString = new String(bytes, StandardCharsets.UTF_8)
     val normalizedString = StringUtil.normalizeLines(rawString)
     normalizedString
